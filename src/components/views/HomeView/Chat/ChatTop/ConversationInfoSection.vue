@@ -1,74 +1,3 @@
-<script setup lang="ts">
-import type { IConversation } from "@src/types";
-
-import { inject, ref } from "vue";
-
-import router from "@src/router";
-import { activeCall } from "@src/store/defaults";
-import useStore from "@src/store/store";
-import { getAvatar, getName } from "@src/utils";
-
-import {
-  ChevronLeftIcon,
-  EllipsisVerticalIcon,
-  InformationCircleIcon,
-  MagnifyingGlassIcon,
-  NoSymbolIcon,
-  PhoneIcon,
-  ShareIcon,
-} from "@heroicons/vue/24/outline";
-import IconButton from "@src/components/ui/inputs/IconButton.vue";
-import Dropdown from "@src/components/ui/navigation/Dropdown/Dropdown.vue";
-import DropdownLink from "@src/components/ui/navigation/Dropdown/DropdownLink.vue";
-
-const props = defineProps<{
-  handleOpenInfo: () => void;
-  handleOpenSearch: () => void;
-}>();
-
-const store = useStore();
-
-const activeConversation = <IConversation>inject("activeConversation");
-
-const showDropdown = ref(false);
-
-// (event) close dropdown menu when click item
-const handleCloseDropdown = () => {
-  showDropdown.value = false;
-};
-
-// (event) close dropdown menu when clicking outside the menu.
-const handleClickOutside = (event: Event) => {
-  let target = event.target as HTMLElement;
-  let parentElement = target.parentElement as HTMLElement;
-
-  if (
-    target &&
-    !(target.classList as Element["classList"]).contains("open-top-menu") &&
-    parentElement &&
-    !(parentElement.classList as Element["classList"]).contains("open-top-menu")
-  ) {
-    handleCloseDropdown();
-  }
-};
-
-// (event) navigate to the /chat/ url
-const handleCloseConversation = () => {
-  router.push({ path: "/chat/" });
-};
-
-// (event) open the voice call modal and expand call
-const handleOpenVoiceCallModal = () => {
-  store.activeCall = activeCall;
-  store.callMinimized = false;
-
-  // wait for the transition to ongoing status to end
-  setTimeout(() => {
-    store.openVoiceCall = true;
-  }, 300);
-};
-</script>
-
 <template>
   <!--conversation info-->
   <div class="w-full flex justify-center items-center">
@@ -83,7 +12,7 @@ const handleOpenVoiceCallModal = () => {
       </IconButton>
     </div>
 
-    <div v-if="store.status !== 'loading'" class="flex grow">
+    <div v-if="!messageStore.loaders.fetchMessages" class="flex grow">
       <!--avatar-->
       <button
         class="mr-5 outline-none"
@@ -92,7 +21,7 @@ const handleOpenVoiceCallModal = () => {
       >
         <div
           :style="{
-            backgroundImage: `url(${getAvatar(activeConversation)})`,
+            backgroundImage: `url(${conversationAvatar})`,
           }"
           class="w-[2.25rem] h-[2.25rem] rounded-full bg-cover bg-center"
         ></div>
@@ -105,20 +34,20 @@ const handleOpenVoiceCallModal = () => {
           @click="props.handleOpenInfo"
           tabindex="0"
         >
-          {{ getName(activeConversation) }}
+          {{ currentChat?.session?.title || conversationName }}
         </p>
-
+        
         <p
           class="body-2 text-color font-extralight rounded-[.25rem]"
           tabindex="0"
-          aria-label="Last seen december 16, 2019"
+          :aria-label="`Last seen ${formatDate(currentChat?.createDate)}`"
         >
-          Last seen Dec 16, 2019
+          Last seen {{ formatDate(currentChat?.createDate) }}
         </p>
       </div>
     </div>
 
-    <div class="flex" :class="{ hidden: store.status === 'loading' }">
+    <div class="flex" :class="{ hidden: messageStore.loaders.fetchMessages }">
       <!--search button-->
       <IconButton
         title="search messages"
@@ -212,3 +141,87 @@ const handleOpenVoiceCallModal = () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useMessageStore } from "@src/store/messages";
+import { activeCall } from "@src/store/defaults";
+import useStore from "@src/store/store";
+
+import {
+  ChevronLeftIcon,
+  EllipsisVerticalIcon,
+  InformationCircleIcon,
+  MagnifyingGlassIcon,
+  NoSymbolIcon,
+  PhoneIcon,
+  ShareIcon,
+} from "@heroicons/vue/24/outline";
+import IconButton from "@src/components/ui/inputs/IconButton.vue";
+import Dropdown from "@src/components/ui/navigation/Dropdown/Dropdown.vue";
+
+const props = defineProps<{
+  handleOpenInfo: () => void;
+  handleOpenSearch: () => void;
+}>();
+
+const router = useRouter();
+const store = useStore();
+const messageStore = useMessageStore();
+
+const showDropdown = ref(false);
+
+const currentChat = computed(() => messageStore.currentChat);
+
+const conversationAvatar = computed(() => {
+  // Replace this with actual logic to get the avatar
+  return "https://example.com/default-avatar.png";
+});
+
+const conversationName = computed(() => {
+  return currentChat.value?.sender || "Unknown";
+});
+
+const formatDate = (dateString?: string) => {
+  if (!dateString) return "Unknown";
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+// (event) close dropdown menu when click item
+const handleCloseDropdown = () => {
+  showDropdown.value = false;
+};
+
+// (event) close dropdown menu when clicking outside the menu.
+const handleClickOutside = (event: Event) => {
+  let target = event.target as HTMLElement;
+  let parentElement = target.parentElement as HTMLElement;
+
+  if (
+    target &&
+    !target.classList.contains("open-top-menu") &&
+    parentElement &&
+    !parentElement.classList.contains("open-top-menu")
+  ) {
+    handleCloseDropdown();
+  }
+};
+
+// (event) navigate to the /chat/ url
+const handleCloseConversation = () => {
+  router.push({ path: "/chat/" });
+};
+
+// (event) open the voice call modal and expand call
+const handleOpenVoiceCallModal = () => {
+  store.activeCall = activeCall;
+  store.callMinimized = false;
+
+  // wait for the transition to ongoing status to end
+  setTimeout(() => {
+    store.openVoiceCall = true;
+  }, 300);
+};
+</script>

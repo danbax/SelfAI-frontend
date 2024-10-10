@@ -1,23 +1,29 @@
+// src/components/ui/inputs/SearchInput.vue
+
 <script setup lang="ts">
 import { MagnifyingGlassIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import IconButton from "@src/components/ui/inputs/IconButton.vue";
 import LabeledTextInput from "@src/components/ui/inputs/LabeledTextInput.vue";
 
-defineEmits(["valueChanged"]);
-
 const props = defineProps<{
+  modelValue: string;
   variant?: string;
   class?: string;
-  value?: string;
 }>();
+
+const emit = defineEmits(['update:modelValue']);
+
+const updateValue = (newValue: string) => {
+  emit('update:modelValue', newValue);
+};
 </script>
 
 <template>
   <LabeledTextInput
     placeholder="Search.."
     class="pl-7"
-    :value="props.value"
-    @value-changed="(value) => $emit('valueChanged', value)"
+    :modelValue="modelValue"
+    @update:modelValue="updateValue"
   >
     <template v-slot:startAdornment>
       <MagnifyingGlassIcon
@@ -26,12 +32,8 @@ const props = defineProps<{
     </template>
     <template v-slot:endAdornment>
       <IconButton
-        v-if="props.value"
-        @click="
-          () => {
-            if (props.value) $emit('valueChanged', '');
-          }
-        "
+        v-if="modelValue"
+        @click="updateValue('')"
         title="clear text"
         aria-label="clear text"
         class="ic-btn-ghost-gray m-[.5rem] p-2"

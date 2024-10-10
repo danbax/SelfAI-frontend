@@ -49,7 +49,11 @@ export interface IMessage {
   type?: string;
   content?: string | IRecording;
   date: string;
-  sender: IContact;
+  sender: {
+    id: string;
+    name: string;
+    avatar: string;
+  };
   replyTo?: number;
   previewData?: IPreviewData;
   attachments?: IAttachment[];
@@ -108,4 +112,21 @@ export interface IEmoji {
   u: string;
   r?: string;
   v?: string[];
+}
+
+export interface ICategory {
+  id: number;
+  categoryId: number;
+  name: string;
+  description: string;
+  icon: string;
+}
+
+export interface ISession {
+  id: number;
+  title: string;
+  text: string;
+  sessionId: number;
+  isCompleted: boolean;
+  isUnlocked: boolean;
 }

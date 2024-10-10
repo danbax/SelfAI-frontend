@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { IConversation } from "@src/types";
+import { Chat } from '@src/store/chats';
 import Conversation from "./Conversation.vue";
+import { IConversation } from '@src/types';
 
 const props = defineProps<{
-  filteredConversations?: IConversation[];
+  filteredConversations: any[];
+  //filteredConversations: IConversation[];
 }>();
 </script>
 

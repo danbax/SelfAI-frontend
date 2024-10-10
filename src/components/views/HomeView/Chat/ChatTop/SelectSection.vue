@@ -1,3 +1,4 @@
+ <!-- HomeView/Chat/ChatTop/SelectSection.vue -->
 <script setup lang="ts">
 import Button from "@src/components/ui/inputs/Button.vue";
 import Checkbox from "@src/components/ui/inputs/Checkbox.vue";

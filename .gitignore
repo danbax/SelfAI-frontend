@@ -3,3 +3,9 @@ package-lock.json
 .prettierrc
 .vscode
 dist/
+build/
+
+# Ignore JavaScript files generated from TypeScript
+*.js
+*.js.map
+

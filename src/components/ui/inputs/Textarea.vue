@@ -2,7 +2,7 @@
 import type { Ref } from "vue";
 import { ref } from "vue";
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["value-changed"]);
 
 const props = defineProps<{
   id?: string;
@@ -25,23 +25,22 @@ const autoResize = () => {
 };
 
 // (event) change the input value and the size of the textarea
-const handleInput = (event: any) => {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
+const handleInput = (event: Event) => {
+  const newValue = (event.target as HTMLTextAreaElement).value;
+  emit("value-changed", newValue);
   autoResize();
 };
 </script>
 
 <template>
   <textarea
-    name="props.name"
-    :id="props.id"
+    :name="name"
+    :id="id"
     class="text-input"
-    :class="[props.bordered ? 'bordered-input' : 'ringed-input']"
+    :class="[bordered ? 'bordered-input' : 'ringed-input']"
     @input="handleInput"
-    :value="props.value"
-    :placeholder="props.placeholder"
+    :value="value"
+    :placeholder="placeholder"
     ref="textarea"
-  >
-  {{ props.value }}
-  </textarea>
+  ></textarea>
 </template>

@@ -1,3 +1,4 @@
+// src/utils.ts
 import useStore from "@src/store/store";
 import type {
   ICall,
@@ -40,26 +41,20 @@ export const getOddContact = (conversation: IConversation) => {
   return oddContact;
 };
 
-/**
- * get avatar based on conversation type.
- * @param conversation
- * @returns A string representing the url to the avatar image
- */
-export const getAvatar = (conversation: IConversation) => {
+export const getAvatar = (conversation?: IConversation) => {
+  if (!conversation) return '';
+  
   if (["group", "broadcast"].includes(conversation.type)) {
-    return conversation?.avatar;
+    return conversation?.avatar ?? '';
   } else {
     let oddContact = getOddContact(conversation);
-    return oddContact?.avatar;
+    return oddContact?.avatar ?? '';
   }
 };
 
-/**
- * get name based on conversation type.
- * @param conversation
- * @returns String
- */
-export const getName = (conversation: IConversation , hyphen?: boolean) => {
+export const getName = (conversation?: IConversation, hyphen?: boolean) => {
+  if (!conversation) return '';
+  
   if (["group", "broadcast"].includes(conversation.type)) {
     if (hyphen) {
       return (conversation.name as string).split(" ").join("-");
@@ -72,7 +67,9 @@ export const getName = (conversation: IConversation , hyphen?: boolean) => {
       return getFullName(oddContact, hyphen);
     }
   }
+  return '';
 };
+
 
 /**
  * trim a string when it reaches a certain length and adds three dots

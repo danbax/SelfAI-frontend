@@ -24,7 +24,7 @@ const props = defineProps<{
     <div class="grow">
       <div class="flex flex-col items-start">
         <p class="heading-2 text-color mb-4">
-          {{ getFullName(props.message.sender) }}
+          full name
         </p>
 
         <p class="body-2 text-color"> Wow really cool </p>

@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useAuthStore } from "@src/store/auth";
 
 import Button from "@src/components/ui/inputs/Button.vue";
 import LabeledTextInput from "@src/components/ui/inputs/LabeledTextInput.vue";
 import PasswordInput from "@src/components/ui/inputs/PasswordInput.vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
+const email = ref("");
 const password = ref("");
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogin = async () => {
+  try {
+    await authStore.login(email.value, password.value);
+    if (authStore.isAuthenticated) {
+      router.push("/");
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+};
 </script>
 
 <template>
@@ -23,37 +39,38 @@ const password = ref("");
         />
         <p class="heading-2 text-color mb-4">Welcome back</p>
         <p class="body-3 text-color text-opacity-75 font-light">
-          Create an account a start messaging now!
+          Create an account and start messaging now!
         </p>
       </div>
 
       <!--form-->
       <div class="mb-6">
         <LabeledTextInput
+          v-model="email"
           label="Email"
           placeholder="Enter your email"
           class="mb-5"
+          @value-changed="email = $event"
         />
         <PasswordInput
-          @value-changed="
-            (value) => {
-              password = value;
-            }
-          "
-          :value="password"
+          v-model="password"
           label="Password"
           placeholder="Enter your password"
+          @value-changed="password = $event"
         />
       </div>
+
+      <!-- Error Message -->
+      <p v-if="authStore.error" class="text-red-500">{{ authStore.error }}</p>
 
       <!--local controls-->
       <div class="mb-6">
         <Button
           class="contained-primary contained-text w-full mb-4"
-          link
-          to="/chat/no-chat/"
-          >Sign in</Button
+          @click="handleLogin"
         >
+          Sign in
+        </Button>
       </div>
 
       <!--divider-->
@@ -76,7 +93,7 @@ const password = ref("");
               class="mr-3"
               alt="google logo"
             />
-            Sign in with google
+            Sign in with Google
           </span>
         </Button>
 

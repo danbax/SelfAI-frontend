@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AccessView from "@src/components/views/AccessView/AccessView.vue";
+import LoginForm from "@src/components/views/AccessView/LoginForm.vue";
+import RegisterForm from "@src/components/views/AccessView/RegisterForm/RegisterForm.vue";
 import HomeView from "@src/components/views/HomeView/HomeView.vue";
 import PasswordResetView from "@src/components/views/PasswordResetView/PasswordResetView.vue";
 import Chat from "@src/components/views/HomeView/Chat/Chat.vue";
@@ -25,13 +26,18 @@ const routes = [
     ],
   },
   {
-    path: "/access/:method/",
-    name: "Access",
-    component: AccessView,
+    path: "/access/sign-in/",
+    name: "SignIn",
+    component: LoginForm,
   },
   {
-    path: "/reset/",
-    name: "Password Reset",
+    path: "/access/sign-up/",
+    name: "SignUp",
+    component: RegisterForm,
+  },
+  {
+    path: "/reset",
+    name: "Reset",
     component: PasswordResetView,
   },
 ];

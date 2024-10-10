@@ -1,15 +1,14 @@
-export const defaultSettings = [
-  {
-    lastSeen: false,
-    readReceipt: false,
-    joiningGroups: false,
-    privateMessages: false,
-    darkMode: false,
-    borderedTheme: false,
-    allowNotifications: false,
-    keepNotifications: false,
-  },
-];
+export const defaultSettings = 
+{
+  lastSeen: false,
+  readReceipt: false,
+  joiningGroups: false,
+  privateMessages: false,
+  darkMode: true,
+  borderedTheme: false,
+  allowNotifications: true,
+  keepNotifications: true,
+};
 
 export const user = {
   id: 1,

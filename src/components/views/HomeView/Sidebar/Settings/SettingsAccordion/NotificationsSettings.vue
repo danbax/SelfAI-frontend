@@ -30,7 +30,7 @@ const store = useStore();
   <Collapse id="notifications-settings-collapse" :collapsed="props.collapsed">
     <SettingsSwitch
       title="Allow Notifications"
-      description="Receive Notifications from avian"
+      description="Receive Notifications from SelfAI"
       :value="!!store.settings.allowNotifications"
       :handle-toggle-switch="
         (value) => (store.settings.allowNotifications = value)

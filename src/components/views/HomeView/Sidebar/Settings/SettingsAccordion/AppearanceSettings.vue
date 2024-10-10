@@ -1,4 +1,7 @@
+<!-- src/components/views/HomeView/Sidebar/Settings/SettingsAccordion/AppearanceSettings.vue -->
+
 <script setup lang="ts">
+import { useAuthStore } from "@src/store/auth";
 import useStore from "@src/store/store";
 
 import AccordionButton from "@src/components/ui/data-display/AccordionButton.vue";
@@ -10,7 +13,15 @@ const props = defineProps<{
   handleToggle: () => void;
 }>();
 
+const authStore = useAuthStore();
 const store = useStore();
+
+const handleDarkModeToggle = (value: boolean) => {
+  store.settings.darkMode = value
+  authStore.updateUserSettings({
+    darkMode: value
+  });
+};
 </script>
 
 <template>
@@ -31,15 +42,8 @@ const store = useStore();
     <SettingsSwitch
       title="Dark Mode"
       description="Apply a theme with dark colors"
-      :value="!!store.settings.darkMode"
-      :handle-toggle-switch="(value) => (store.settings.darkMode = value)"
-      class="mb-7"
-    />
-    <SettingsSwitch
-      title="Bordered Theme"
-      description="Apply borders to the theme"
-      :value="!!store.settings.borderedTheme"
-      :handle-toggle-switch="(value) => (store.settings.borderedTheme = value)"
+      :value="authStore.userSettings.darkMode"
+      :handle-toggle-switch="handleDarkModeToggle"
       class="mb-7"
     />
   </Collapse>

@@ -4,26 +4,23 @@ import { computed } from "vue";
 import useStore from "@src/store/store";
 
 import FadeTransition from "@src/components/ui/transitions/FadeTransition.vue";
-import Calls from "@src/components/views/HomeView/Sidebar/Calls/Calls.vue";
-import Contacts from "@src/components/views/HomeView/Sidebar/Contacts/Contacts.vue";
+import Categories from "@src/components/views/HomeView/Sidebar/Categories/Categories.vue";
 import Conversations from "@src/components/views/HomeView/Sidebar/Conversations/Conversations.vue";
 import Notifications from "@src/components/views/HomeView/Sidebar/Notifications/Notifications.vue";
 import Settings from "@src/components/views/HomeView/Sidebar/Settings/Settings.vue";
 
 const store = useStore();
 
-// the selected sidebar component (e.g message/notifications/settings)
 const ActiveComponent = computed((): any => {
-  if (store.activeSidebarComponent === "messages") {
-    return Conversations;
-  } else if (store.activeSidebarComponent === "contacts") {
-    return Contacts;
-  } else if (store.activeSidebarComponent === "notifications") {
-    return Notifications;
-  } else if (store.activeSidebarComponent === "phone") {
-    return Calls;
-  } else if (store.activeSidebarComponent === "settings") {
-    return Settings;
+  switch(store.activeSidebarComponent) {
+    case "messages":
+      return Conversations;
+    case "notifications":
+      return Notifications;
+    case "phone":
+      return Categories;
+    case "settings":
+      return Settings;
   }
 });
 </script>

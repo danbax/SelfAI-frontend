@@ -1,59 +1,58 @@
 <script setup lang="ts">
-import type { Ref } from "vue";
-
-import { ref } from "vue";
-
+import { ref, computed, onMounted } from "vue";
 import useStore from "@src/store/store";
-
+import { useAuthStore } from "@src/store/auth";
 import AccordionButton from "@src/components/ui/data-display/AccordionButton.vue";
 import Button from "@src/components/ui/inputs/Button.vue";
-import DropFileUpload from "@src/components/ui/inputs/DropFileUpload.vue";
 import LabeledTextInput from "@src/components/ui/inputs/LabeledTextInput.vue";
 import Collapse from "@src/components/ui/utils/Collapse.vue";
 
-// Types
-interface AccountValues {
-  firstName: string | undefined;
-  lastName: string | undefined;
-  avatar: File | undefined;
-}
-
-// Variables
 const props = defineProps<{
   collapsed: boolean;
   handleToggle: () => void;
 }>();
 
 const store = useStore();
-
-const accountValues: Ref<AccountValues> = ref({
-  firstName: store.user?.firstName,
-  lastName: store.user?.lastName,
-  avatar: undefined,
-});
+const authStore = useAuthStore();
 
 const loading = ref(false);
 
-// (event) handle submitting the values of the form.
-const handleSubmit = () => {
+const accountValues = computed(() => ({
+  firstName: authStore.userSettings?.firstName ?? store.user?.firstName ?? '',
+  lastName: authStore.userSettings?.lastName ?? store.user?.lastName ?? '',
+  birthDate: authStore.userSettings?.birthDate ?? '',
+}));
+
+onMounted(async () => {
+  await authStore.fetchUserSettings();
+});
+
+const handleSubmit = async () => {
   loading.value = true;
 
-  store.$patch({
-    user: {
-      ...store.user,
+  try {
+    await authStore.updateUserSettings({
       firstName: accountValues.value.firstName,
       lastName: accountValues.value.lastName,
-    },
-  });
+      birthDate: accountValues.value.birthDate,
+    });
 
-  setTimeout(() => {
+    store.$patch({
+      user: {
+        ...store.user,
+        firstName: accountValues.value.firstName,
+        lastName: accountValues.value.lastName,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to update user settings", error);
+  } finally {
     loading.value = false;
-  }, 2000);
+  }
 };
 </script>
 
 <template>
-  <!--account settings-->
   <AccordionButton
     id="account-settings-toggler"
     class="w-full flex px-5 py-6 mb-3 rounded focus:outline-none"
@@ -70,28 +69,27 @@ const handleSubmit = () => {
     <LabeledTextInput
       label="First name"
       inputClasses="mb-7"
-      :value="accountValues?.firstName"
-      @value-changed="(value) => (accountValues.firstName = value)"
+      v-model="accountValues.firstName"
     />
     <LabeledTextInput
       label="Last name"
       inputClasses="mb-7"
-      :value="accountValues?.lastName"
-      @value-changed="(value) => (accountValues.lastName = value)"
+      v-model="accountValues.lastName"
     />
-    <DropFileUpload
-      label="Avatar"
-      class="mb-7"
-      accept="image/*"
-      :value="accountValues.avatar"
-      @value-changed="(value) => (accountValues.avatar = value)"
+    <LabeledTextInput
+      label="Birth Date"
+      inputClasses="mb-7"
+      type="date"
+      v-model="accountValues.birthDate"
     />
-    <Button
+    <div class="pt-3">
+      <Button
       class="contained-primary contained-text w-full py-4"
       @click="handleSubmit"
       :loading="loading"
     >
       Save Settings
     </Button>
+    </div>
   </Collapse>
 </template>

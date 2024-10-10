@@ -32,6 +32,7 @@ const useStore = defineStore("chat", () => {
   const settings: Ref<ISettings> = ref(
     storage.settings || defaults.defaultSettings
   );
+  
   const activeCall: Ref<ICall | undefined> = ref(defaults.activeCall);
   const recentEmoji: Ref<IEmoji[]> = ref(storage.recentEmoji || []);
   const emojiSkinTone: Ref<string> = ref(storage.emojiSkinTone || "neutral");

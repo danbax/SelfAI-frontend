@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 import PasswordInput from "@src/components/ui/inputs/PasswordInput.vue";
 import Button from "@src/components/ui/inputs/Button.vue";
-
-const password = ref("");
-const confirmPassword = ref("");
+const props = defineProps({
+  formData: {
+    type: Object,
+    required: true,
+  },
+});
+const emit = defineEmits(['active-section-change', 'register']);
 </script>
 
 <template>
@@ -13,34 +15,25 @@ const confirmPassword = ref("");
     <div class="mb-5">
       <!--form-->
       <PasswordInput
-        @valueChanged="(value) => (password = value)"
-        :value="password"
+        v-model="formData.password"
         label="Password"
         placeholder="Enter your password"
         class="mb-4"
       />
-
       <PasswordInput
-        @valueChanged="(value) => (confirmPassword = value)"
-        :value="confirmPassword"
+        v-model="formData.confirmPassword"
         label="Confirm Password"
-        placeholder="Enter your password"
+        placeholder="Confirm your password"
       />
     </div>
-
     <!--controls-->
     <div class="mb-5">
-      <Button class="contained-primary contained-text w-full mb-4"
-        >Sign up</Button
-      >
+      <Button class="contained-primary contained-text w-full mb-4" @click="emit('register')">
+        Sign up
+      </Button>
       <Button
         class="outlined-primary outlined-text w-full"
-        @click="
-          $emit('active-section-change', {
-            sectionName: 'personal-section',
-            animationName: 'slide-right',
-          })
-        "
+        @click="emit('active-section-change', { sectionName: 'personal-section', animationName: 'slide-right' })"
       >
         Back
       </Button>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ArchiveBoxIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import useStore from "@src/store/store";
+import { useChatStore } from '@src/store/chats';
 
 const props = defineProps<{
   open: boolean;
 }>();
 
-const store = useStore();
+const chatStore = useChatStore();
 </script>
 
 <template>
@@ -37,7 +37,6 @@ const store = useStore();
       "
       tabindex="0"
     >
-      <!--archived icon-->
       <div class="mr-4" :class="{ hidden: props.open }">
         <div
           class="w-7 h-7 flex justify-center items-center rounded-full bg-gray-50 dark:bg-gray-500 transition duration-500"
@@ -48,7 +47,6 @@ const store = useStore();
         </div>
       </div>
 
-      <!--close archive button-->
       <div
         class="w-full h-full flex justify-center items-center"
         :class="{ hidden: !props.open }"
@@ -76,7 +74,6 @@ const store = useStore();
 
       <div class="w-full flex flex-col" :class="{ hidden: props.open }">
         <div class="w-full">
-          <!--title-->
           <div class="flex items-start">
             <div class="grow mb-4 text-start">
               <p class="heading-2 text-color">Archived Conversations</p>
@@ -85,9 +82,8 @@ const store = useStore();
         </div>
 
         <div>
-          <!--number of conversations -->
           <p class="body-2 text-color flex justify-start items-center">
-            {{ store.archivedConversations.length }}
+            {{ chatStore.chats.filter(chat => chat.session_type === 'archived').length }}
             conversations
           </p>
         </div>

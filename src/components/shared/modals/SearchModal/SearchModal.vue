@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { IConversation } from "@src/types";
-
 import NoMessage from "@src/components/states/empty-states/NoMessage.vue";
 import Button from "@src/components/ui/inputs/Button.vue";
 import SearchInput from "@src/components/ui/inputs/SearchInput.vue";
@@ -11,8 +11,11 @@ import ScrollBox from "@src/components/ui/utils/ScrollBox.vue";
 const props = defineProps<{
   open: boolean;
   closeModal: () => void;
-  conversation: IConversation;
+  conversation?: IConversation;
 }>();
+
+const messages = computed(() => props.conversation?.messages || []);
+const hasMessages = computed(() => messages.value.length > 0);
 </script>
 
 <template>
@@ -24,7 +27,6 @@ const props = defineProps<{
           <p id="modal-title" class="heading-1 text-color" tabindex="0">
             Messages
           </p>
-
           <Button
             @click="props.closeModal"
             class="outlined-danger ghost-text py-2 px-4"
@@ -33,21 +35,19 @@ const props = defineProps<{
             esc
           </Button>
         </div>
-
         <!--search-->
         <div class="mx-5 mb-5">
           <SearchInput />
         </div>
-
         <!--message-->
         <ScrollBox class="max-h-[14.375rem] overflow-y-scroll">
-          <MessageItem
-            v-if="props.conversation.messages.length > 0"
-            v-for="(message, index) in props.conversation.messages"
-            :message="message"
-            :key="index"
-          />
-
+          <template v-if="hasMessages">
+            <MessageItem
+              v-for="(message, index) in messages"
+              :message="message"
+              :key="index"
+            />
+          </template>
           <NoMessage vertical v-else />
         </ScrollBox>
       </div>

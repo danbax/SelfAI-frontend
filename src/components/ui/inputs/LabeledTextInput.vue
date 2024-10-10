@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import TextInput from "@src/components/ui/inputs/TextInput.vue";
 
-defineEmits(["valueChanged"]);
-
 const props = defineProps<{
+  modelValue?: string;
   id?: string;
   type?: string;
   label?: string;
-  value?: string;
   name?: string;
   class?: string;
   placeholder?: string;
   bordered?: boolean;
 }>();
+
+const emit = defineEmits(["update:modelValue"]);
+
+const onValueChanged = (value: string) => {
+  emit("update:modelValue", value);
+};
 </script>
 
 <template>
@@ -28,16 +32,16 @@ const props = defineProps<{
 
       <TextInput
         :type="props.type || 'text'"
-        name="props.name"
+        :name="props.name"
         :id="props.id"
-        :value="value"
+        :modelValue="modelValue"
         class="text-input"
         :class="[
           props.bordered ? 'bordered-input' : 'ringed-input',
           props.class,
         ]"
         :placeholder="props.placeholder"
-        @value-changed="(value) => $emit('valueChanged', value)"
+        @update:modelValue="onValueChanged"
       />
 
       <div class="absolute top-0 right-0">

@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 import useStore from "@src/store/store";
+import { onMounted } from "vue";
 
 import {
   BellIcon,
@@ -11,12 +12,15 @@ import {
   PhoneIcon,
   SunIcon,
   UserIcon,
+  ListBulletIcon,
 } from "@heroicons/vue/24/solid";
 import AccountDropdown from "@src/components/views/HomeView/Navigation/AccountDropdown.vue";
 import Logo from "@src/components/views/HomeView/Navigation/Logo.vue";
 import NavLink from "@src/components/views/HomeView/Navigation/NavLink.vue";
 
 const store = useStore();
+
+const settings = store.settings;
 
 const showDropdown = ref(false);
 
@@ -50,10 +54,11 @@ const handleActiveSidebarComponentChange = (value: string) => {
           <!--contacts list button-->
           <li>
             <NavLink
-              :icon="UserIcon"
-              title="Contacts"
-              @click="() => handleActiveSidebarComponentChange('contacts')"
-              :active="store.activeSidebarComponent === 'contacts'"
+              :icon="BellIcon"
+              title="Notifications"
+              :notifications="3"
+              @click="() => handleActiveSidebarComponentChange('notifications')"
+              :active="store.activeSidebarComponent === 'notifications'"
             />
           </li>
 
@@ -63,27 +68,14 @@ const handleActiveSidebarComponentChange = (value: string) => {
               id="small-profile-menu"
               class="xs:block md:hidden"
               aria-labelledby="small-profile-menu-button"
-              :show-dropdown="showDropdown"
-              :handle-show-dropdown="() => (showDropdown = true)"
-              :handle-close-dropdown="() => (showDropdown = false)"
             />
           </li>
 
-          <!--notifications button-->
-          <li class="xs:hidden md:inline">
-            <NavLink
-              :icon="BellIcon"
-              title="Notifications"
-              :notifications="3"
-              @click="() => handleActiveSidebarComponentChange('notifications')"
-              :active="store.activeSidebarComponent === 'notifications'"
-            />
-          </li>
 
           <!--voice call button-->
           <li>
             <NavLink
-              :icon="PhoneIcon"
+              :icon="ListBulletIcon"
               title="Call log"
               @click="() => handleActiveSidebarComponentChange('phone')"
               :active="store.activeSidebarComponent === 'phone'"
@@ -137,9 +129,6 @@ const handleActiveSidebarComponentChange = (value: string) => {
         id="profile-menu"
         class="xs:hidden md:block"
         aria-labelledby="profile-menu-button"
-        :show-dropdown="showDropdown"
-        :handle-show-dropdown="() => (showDropdown = true)"
-        :handle-close-dropdown="() => (showDropdown = false)"
       />
     </div>
   </div>

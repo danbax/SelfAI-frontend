@@ -1,3 +1,4 @@
+<!-- HomeView/Chat/ChatMiddle/Message/MessageContextMenu.vue -->
 <script setup lang="ts">
 import type { IConversation, IMessage } from "@src/types";
 import { inject } from "vue";

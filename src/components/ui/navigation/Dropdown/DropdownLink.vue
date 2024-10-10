@@ -12,7 +12,7 @@ const props = defineProps<{
   <button
     :aria-label="props.label"
     @click.prevent="props.handleClick"
-    :class="classes"
+    :class="[]"
     role="menuitem"
   >
     <slot></slot>

@@ -15,12 +15,8 @@ import blurPath from "@src/assets/images/blur.png";
         class="px-9 py-[3.75rem] rounded-[.3125rem] bg-cover bg-no-repeat"
         :style="{ 'background-image': `url(${blurPath})` }"
       >
-        <p class="display mb-5 text-white">
-          Blazingly fast messaging platform for the
-          <span class="text-gradient">web.</span>
-        </p>
         <p class="body-3 text-white">
-          Avian saves all the data in user’s devices and uses a cryptographic
+          SelfAI saves all the data in user’s devices and uses a cryptographic
           protocols to sync the data across multiple browsers and devices.
         </p>
       </div>

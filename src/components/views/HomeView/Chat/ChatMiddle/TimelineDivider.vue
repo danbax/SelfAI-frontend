@@ -1,3 +1,4 @@
+<!-- TimelineDivider.vue -->
 <template>
   <div class="w-full my-7 flex items-center justify-center">
     <div
