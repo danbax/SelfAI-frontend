@@ -76,7 +76,7 @@ const handleActiveSidebarComponentChange = (value: string) => {
           <li>
             <NavLink
               :icon="ListBulletIcon"
-              title="Call log"
+              title="Categories"
               @click="() => handleActiveSidebarComponentChange('phone')"
               :active="store.activeSidebarComponent === 'phone'"
             />

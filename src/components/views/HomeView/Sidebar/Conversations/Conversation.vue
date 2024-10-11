@@ -49,10 +49,10 @@ const formatDate = (dateString: string) => {
       }"
     >
       <div class="mr-4">
-        <div class="w-7 h-7 rounded-full bg-cover bg-center bg-green-120 dark:bg-green-800">
+        <div class="w-7 h-7 rounded-full bg-cover bg-center bg-blue-120 dark:bg-blue-800">
           <Icon
             :icon="conversation.category.icon"
-            class="w-7 h-7 text-green-500 dark:text-green-300"
+            class="w-7 h-7 text-blue-500 dark:text-blue-300"
           />
         </div>
       </div>

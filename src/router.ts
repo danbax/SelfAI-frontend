@@ -4,6 +4,7 @@ import RegisterForm from "@src/components/views/AccessView/RegisterForm/Register
 import HomeView from "@src/components/views/HomeView/HomeView.vue";
 import PasswordResetView from "@src/components/views/PasswordResetView/PasswordResetView.vue";
 import Chat from "@src/components/views/HomeView/Chat/Chat.vue";
+import UserDataView from "@src/components/views/HomeView/Sidebar/UserData/UserDataView.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
         component: Chat,
       },
     ],
+  },
+  {
+    path: "/user-data/:type",
+    name: "UserData",
+    component: UserDataView,
   },
   {
     path: "/access/sign-in/",

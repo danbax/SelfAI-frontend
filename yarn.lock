@@ -202,6 +202,18 @@
   dependencies:
     "postcss-nested" "^5.0.5"
 
+"@tanstack/table-core@8.20.5":
+  "integrity" "sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg=="
+  "resolved" "https://registry.npmjs.org/@tanstack/table-core/-/table-core-8.20.5.tgz"
+  "version" "8.20.5"
+
+"@tanstack/vue-table@^8.20.5":
+  "integrity" "sha512-2xixT3BEgSDw+jOSqPt6ylO/eutDI107t2WdFMVYIZZ45UmTHLySqNriNs0+dMaKR56K5z3t+97P6VuVnI2L+Q=="
+  "resolved" "https://registry.npmjs.org/@tanstack/vue-table/-/vue-table-8.20.5.tgz"
+  "version" "8.20.5"
+  dependencies:
+    "@tanstack/table-core" "8.20.5"
+
 "@types/node@^20.6.0", "@types/node@>= 14":
   "integrity" "sha512-najjVq5KN2vsH2U/xyh2opaSEz6cZMR2SetLIlxlj08nOcmPOemJmUK2o4kUzfLqfrWE0PIrNeE16XhYDd3nqg=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-20.6.0.tgz"
@@ -2142,7 +2154,7 @@
     "@vue/typescript" "1.8.10"
     "semver" "^7.3.8"
 
-"vue@^2.6.14 || ^3.3.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@>= 3", "vue@>=3", "vue@3.3.4", "vue@3.x":
+"vue@^2.6.14 || ^3.3.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@>= 3", "vue@>=3", "vue@>=3.2", "vue@3.3.4", "vue@3.x":
   "integrity" "sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   "version" "3.3.4"
