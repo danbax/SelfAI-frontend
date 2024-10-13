@@ -1,3 +1,5 @@
+// src/components/views/AccessView/LoginForm.vue
+
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@src/store/auth";
@@ -22,6 +24,10 @@ const handleLogin = async () => {
   } catch (error) {
     console.error("Login failed:", error);
   }
+};
+
+const handleGoogleLogin = () => {
+  authStore.googleLogin();
 };
 </script>
 
@@ -86,7 +92,7 @@ const handleLogin = async () => {
 
       <!--oauth controls-->
       <div>
-        <Button class="outlined-primary outlined-text w-full mb-5">
+        <Button class="outlined-primary outlined-text w-full mb-5" @click="handleGoogleLogin">
           <span class="flex">
             <img
               src="@src/assets/vectors/google-logo.svg"
@@ -100,7 +106,7 @@ const handleLogin = async () => {
         <!--bottom text-->
         <div class="flex justify-center">
           <p class="body-2 text-color">
-            Don’t have an account?
+            Don't have an account?
             <RouterLink
               to="/access/sign-up/"
               class="text-indigo-400 opacity-100"

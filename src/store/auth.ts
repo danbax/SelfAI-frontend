@@ -90,5 +90,18 @@ export const useAuthStore = defineStore('auth', {
                 throw error;
             }
         },
+        googleLogin() {
+            window.location.href = `${import.meta.env.VITE_API_BASE_URL}auth/google`;
+        },
+        async handleGoogleCallback(token: string) {
+            try {
+                localStorage.setItem('access_token', token);
+                this.isAuthenticated = true;
+                this.error = null;
+            } catch (error: any) {
+                this.error = error.response?.data?.message || 'Google login failed';
+                this.isAuthenticated = false;
+            }
+        },
     },
 });

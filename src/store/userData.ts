@@ -84,8 +84,7 @@ export const useUserDataStore = defineStore('userData', {
           progress: 2
         }
       ];
-      ;
-      ;
+      
       this.loading = false;
       return;
       try {

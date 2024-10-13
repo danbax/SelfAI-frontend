@@ -5,6 +5,11 @@ import HomeView from "@src/components/views/HomeView/HomeView.vue";
 import PasswordResetView from "@src/components/views/PasswordResetView/PasswordResetView.vue";
 import Chat from "@src/components/views/HomeView/Chat/Chat.vue";
 import UserDataView from "@src/components/views/HomeView/Sidebar/UserData/UserDataView.vue";
+import ConversationsView from "@src/components/views/HomeView/Sidebar/Conversations/Conversations.vue";
+import NotificationsView from "@src/components/views/HomeView/Sidebar/Notifications/Notifications.vue";
+import CategoriesView from "@src/components/views/HomeView/Sidebar/Categories/Categories.vue";
+import SettingsView from "@src/components/views/HomeView/Sidebar/Settings/Settings.vue";
+import GoogleCallback from "@src/components/views/AccessView/GoogleCallback.vue";
 
 const routes = [
   {
@@ -23,13 +28,32 @@ const routes = [
         path: "/chat/:id/",
         name: "Chat",
         component: Chat,
+      },{
+        path: "sessions",
+        name: "Active Sessions",
+        component: ConversationsView,
+      },
+      {
+        path: "notifications",
+        name: "Notifications",
+        component: NotificationsView,
+      },
+      {
+        path: "categories",
+        name: "Categories",
+        component: CategoriesView,
+      },
+      {
+        path: "settings",
+        name: "Settings",
+        component: SettingsView,
+      },
+      {
+        path: "/user-data/:type",
+        name: "UserData",
+        component: UserDataView,
       },
     ],
-  },
-  {
-    path: "/user-data/:type",
-    name: "UserData",
-    component: UserDataView,
   },
   {
     path: "/access/sign-in/",
@@ -45,6 +69,11 @@ const routes = [
     path: "/reset",
     name: "Reset",
     component: PasswordResetView,
+  },
+  {
+    path: "/auth/google/callback",
+    name: "GoogleCallback",
+    component: GoogleCallback,
   },
 ];
 

@@ -133,7 +133,7 @@ onMounted(async () => {
         </div>
 
         <div v-if="allLoaded && filteredConversations.length > 0" class="text-center py-4 text-gray-500">
-          No more conversations to load
+          No more active sessions to load
         </div>
       </div>
     </div>
