@@ -90,7 +90,10 @@ export const useMessageStore = defineStore('messages', {
         const chatStore = useChatStore();
         const assistantMessage = await chatStore.addMessageToChat(createMessageDto);
 
-        this.messages.push(assistantMessage);
+        if(assistantMessage)
+        {
+          this.messages.push(assistantMessage);
+        }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to add message';
         throw error;

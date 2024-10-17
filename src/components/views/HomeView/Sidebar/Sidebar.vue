@@ -21,6 +21,8 @@ const ActiveComponent = computed((): any => {
       return Categories;
     case "settings":
       return Settings;
+    default:
+      return null;
   }
 });
 </script>
@@ -30,7 +32,7 @@ const ActiveComponent = computed((): any => {
     class="xs:w-full md:w-[32rem] h-full xs:px-5 md:p-0 flex flex-col overflow-visible transition-all duration-500"
   >
     <FadeTransition>
-      <component :is="ActiveComponent" class="h-full flex flex-col" />
+      <component v-show="ActiveComponent" :is="ActiveComponent" class="h-full flex flex-col" />
     </FadeTransition>
   </aside>
 </template>

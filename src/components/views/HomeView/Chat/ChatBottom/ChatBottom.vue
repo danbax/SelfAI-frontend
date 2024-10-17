@@ -12,7 +12,6 @@ const loaders = computed(() => messageStore.loaders);
 const message = ref("");
 
 const sendMessage = async () => {
-  console.log('Sending message:', message.value);
   if (!message.value.trim() || !currentChat.value) return;
   try {
     const messageValue = message.value.trim();
@@ -32,7 +31,7 @@ const updateMessage = (newValue: string) => {
 };
 
 const handleKeyDown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter' && event.shiftKey) {
+  if ((event.key === 'Enter' && event.shiftKey) || (event.key === 'Enter' && event.ctrlKey)) {
     event.preventDefault();
     sendMessage();
   }
@@ -53,7 +52,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
             cols="30"
             rows="1"
             placeholder="Write your message here"
-            aria-label="Write your message here, press Shift+Enter to send"
+            aria-label="Write your message here, press Shift+Enter or Ctrl+Enter to send"
           />
         </div>
       </div>

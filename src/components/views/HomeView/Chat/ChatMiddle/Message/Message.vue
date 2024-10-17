@@ -27,6 +27,13 @@ const toggleSelect = () => {
     props.handleSelectMessage(props.message.id);
   }
 };
+
+const formattedMessage = computed(() => {
+  return props.message.message
+    .replace(/\n/g, '<br/>')
+    .replace(/^###\s*(.*?)$/gm, '<h2>$1</h2>')
+    .replace(/\*+([^*\n]+)\*+/g, '<strong>$1</strong>');
+});
 </script>
 
 <template>
@@ -39,7 +46,7 @@ const toggleSelect = () => {
       <!-- Add avatar component here -->
     </div>
     <div class="message-content">
-      <p class="message-text">{{ message.message }}</p>
+      <div class="message-text" v-html="formattedMessage"></div>
       <span class="message-time">{{ new Date(message.createDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false}) }}</span>
     </div>
   </div>
@@ -81,6 +88,11 @@ const toggleSelect = () => {
 
 .message-text {
   margin: 0;
+}
+
+.message-text h2 {
+  margin: 10px 0;
+  font-size: 1.2em;
 }
 
 .message-time {

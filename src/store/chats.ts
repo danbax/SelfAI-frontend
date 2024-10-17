@@ -122,11 +122,16 @@ export const useChatStore = defineStore('chats', {
           createDate: new Date().toISOString()
         };
 
-        if (assistantResponse.payload && assistantResponse.payload.action) {
-          this.handleActionPayload(assistantResponse.payload);
+        if(assistantResponse.actions)
+        {
+          for(const action of assistantResponse.actions)
+          {
+            console.log(action);
+            this.handleActionPayload(action);
+          }
         }
 
-        return assistantMessage;
+        return assistantMessage ?? null;
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to send message';
         throw error;

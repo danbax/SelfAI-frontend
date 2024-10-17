@@ -74,6 +74,7 @@ const keyword = ref('');
 const userData = computed(() => userDataStore.userData);
 const loading = computed(() => userDataStore.loading);
 
+
 const filteredUserData = computed(() => {
   if (!Array.isArray(userData.value)) {
     return userData.value;
@@ -81,7 +82,7 @@ const filteredUserData = computed(() => {
 
   const keywordLowerCase = keyword.value.toLowerCase();
 
-  if(!keywordLowerCase) return userData.value;
+  if (!keywordLowerCase) return userData.value;
 
   return userData.value.filter((data) => {
     const stringData = JSON.stringify(data);
